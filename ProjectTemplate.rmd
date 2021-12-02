@@ -1,0 +1,90 @@
+---
+title: "Group XX Project"
+author: "Name"
+date: "`r Sys.Date()`"
+output: openintro::lab_report
+---
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+```
+
+### Problem 1: Read in and Prepare Data
+```{r PR}
+
+```
+
+
+### Problem 3:  EDA
+#### Part 3a)
+```{r Univariate EDA}
+
+```
+
+#### Part 3b)
+```{r Bivariate EDA}
+
+```
+
+### Problem 4:  Regression of Weight on Length
+#### Part 4a)
+```{r Scatterplot}
+
+```
+
+#### Part 4b)
+```{r Reg W on L}
+
+```
+
+
+#### Part 4c)
+```{r Reg Diagnostics}
+
+```
+
+
+#### Part 4e)
+```{r Beta1 EQ 3}
+
+```
+
+
+
+#### Part 4f)
+```{r CI and PI}
+
+```
+
+
+### Problem 5:  Fish Length and Site
+#### Part 5a)
+```{r FL by Site}
+
+```
+
+#### Part 5b)
+```{r Inference for Length}
+
+```
+
+
+### Problem 6: Probable Age Class 2 by Site
+#### Part 6a)
+```{r AgeP 2 by Site}
+
+```
+
+#### Part 6b)
+```{r CI P6}
+
+```
+
+#### Part 6c)
+```{r HT P6}
+
+```
+
+...
+
