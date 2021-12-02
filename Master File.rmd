@@ -1,6 +1,6 @@
 ---
-title: "Group XX Project"
-author: "Name"
+title: "Group 27 Project"
+author: "Jade Butler"
 date: "`r Sys.Date()`"
 output: openintro::lab_report
 ---
@@ -12,6 +12,7 @@ library(openintro)
 
 ### Problem 1: Read in and Prepare Data
 ```{r PR}
+read.csv("fish.csv")
 
 ```
 
