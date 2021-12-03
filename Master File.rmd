@@ -13,6 +13,7 @@ library(BSDA)
 library(infer)
 library (ggpubr)
 library(car)
+library(ggplot2)
 ```
 
 ### Problem 1: Read in and Prepare Data
@@ -37,11 +38,18 @@ Fish2 %>%
 ### Problem 3:  EDA
 #### Part 3a)
 ```{r Univariate EDA}
-
+#graph for Age, Weight and Length each
+ggplot(Fish2, aes(x = AgeP)) +
+  geom_bar()
+ggplot(Fish2, aes(x = Weight)) +
+  geom_bar(position = "dodge")
+ggplot(Fish2, aes(x = Length)) +
+  geom_bar()
 ```
 
 #### Part 3b)
 ```{r Bivariate EDA}
+#graph for relationship between weight and length
 
 ```
 
