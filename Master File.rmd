@@ -21,11 +21,15 @@ Fish <- read.csv("fish.csv")
 Fish$Site <- factor(Fish$Site)
 Fish$AgeP<- factor(Fish$AgeP)
 count(Fish)
-Fish2 <- Fish[which(Fish$YrCaught==Fish$YrTagged),]
+Fish2 <- Fish[which(Fish$YrCaught==Fish$YrTagged),] #this is our new data set for the rest of the assignment
 count(Fish2)
-sum(is.na(Fish$YrTagged))
+MW <- sum(is.na(Fish$Weight))
+MA <- sum(is.na(Fish$Age))
+MS <- sum(is.na(Fish$Site))
+ML <- sum(is.na(Fish$Length))
 colSums(is.na(Fish))
 ```
+
 
 
 ### Problem 3:  EDA
