@@ -14,6 +14,7 @@ library(openintro)
 ```{r PR}
 FISH <- read.csv("fish.csv")
 glimpse(FISH)
+mean(length)
 
 ```
 
