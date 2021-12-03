@@ -61,23 +61,36 @@ ggplot(Fish2,
    geom_point(color="cornflowerblue", 
              size = 2, 
              alpha=.8) + 
-  scale_x_continuous(breaks = seq(50, 225, 25),
-                     limits=c(50,250)) +
+  scale_x_continuous(breaks = seq(50, 210, 20),
+                     limits=c(50,210)) +
   scale_y_continuous(breaks = seq(0, 100, 10),
                      limits=c(0,100)) + 
-  labs(title = "Fish Measured Weight by Measured Length", x = "Length in mm", y = "Weight in grams")
-summary(Fish2)
+  labs(title = "Fish Measured Weight on Measured Length", x = "Length in mm", y = "Weight in grams")
+summary(Fish2$Length, Fish2$Weight)
 ```
 
 ### Problem 4:  Regression of Weight on Length
 #### Part 4a)
 ```{r Scatterplot}
-
+ggplot(Fish2, 
+       aes(x = log(Length), 
+           y = log(Weight))) +
+   geom_point(color="cornflowerblue", 
+             size = 2, 
+             alpha=.8) + 
+  labs(title = "Fish Measured Weight on Measured Length", x = "Length in mm", y = "Weight in grams")
 ```
 
 #### Part 4b)
 ```{r Reg W on L}
-
+ggplot(Fish2, 
+       aes(x = log(Length), 
+           y = log(Weight))) +
+   geom_point(color="cornflowerblue", 
+             size = 2, 
+             alpha=.8) + 
+  labs(title = "Fish Measured Weight on Measured Length", x = "Natural Log Length in mm", y = "Natural Log Weight in grams") +
+  geom_smooth(method = "lm", color = "black")
 ```
 
 
