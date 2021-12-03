@@ -23,11 +23,15 @@ Fish$AgeP<- factor(Fish$AgeP)
 count(Fish)
 Fish2 <- Fish[which(Fish$YrCaught==Fish$YrTagged),] #this is our new data set for the rest of the assignment
 count(Fish2)
-MW <- sum(is.na(Fish$Weight))
-MA <- sum(is.na(Fish$Age))
-MS <- sum(is.na(Fish$Site))
-ML <- sum(is.na(Fish$Length))
-colSums(is.na(Fish))
+MW <- sum(is.na(Fish$Weight)) #filter out missing values for Weight
+MA <- sum(is.na(Fish$Age)) #filter out missing values for Age
+MS <- sum(is.na(Fish$Site)) #filter out missing values for Site
+ML <- sum(is.na(Fish$Length)) #filter out missing values for Length
+
+#print table with Fish2, MW, MA, MS AND ML. -> Omit YrCaught and YrTagged from this table
+Fish2 %>%
+  distinct(count(Fish2), sum(is.na(Fish$Weight)), sum(is.na(Fish$Age)), sum(is.na(Fish$Site)), sum(is.na(Fish$Length)))
+  
 ```
 
 
