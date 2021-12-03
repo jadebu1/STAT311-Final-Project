@@ -40,17 +40,20 @@ Fish2 %>%
 ```{r Univariate EDA}
 #graph for Age, Weight and Length each
 ggplot(Fish2, aes(x = AgeP)) +
-  geom_bar()
-ggplot(Fish2, aes(x = Weight)) +
-  geom_bar(position = "dodge")
-ggplot(Fish2, aes(x = Length)) +
-  geom_bar()
+  geom_bar() + ylim(0,3500) + labs(x = "Age", title = "Fish Measured Age 0-3")
+ggplot(data = Fish2, aes(x = Length)) + 
+  geom_histogram(binwidth = 5) + labs(title = "Captured Fish Measured Length")
+ggplot(data = Fish2, aes(x = Weight)) +
+  geom_histogram(binwidth = 2) + ylim(0,50) + labs(title = "Captured Fish Measured Weight")
 ```
 
 #### Part 3b)
 ```{r Bivariate EDA}
 #graph for relationship between weight and length
-
+ggplot(Fish2, 
+       aes(x = Length, 
+           y = Weight)) +
+  geom_point() + labs(title = "Fish Measured Weight by Measured Length")
 ```
 
 ### Problem 4:  Regression of Weight on Length
