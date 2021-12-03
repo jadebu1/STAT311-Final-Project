@@ -1,6 +1,6 @@
 ---
 title: "Group 27 Project"
-author: "Jade Butler"
+author: "Jade Butler, Sonia Saxon, Joanna Mendelsohn, Kai Smith"
 date: "`r Sys.Date()`"
 output: openintro::lab_report
 ---
