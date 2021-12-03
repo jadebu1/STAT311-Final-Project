@@ -39,12 +39,13 @@ Fish2 %>%
 #### Part 3a)
 ```{r Univariate EDA}
 #graph for Age, Weight and Length each
-ggplot(Fish2, aes(x = AgeP)) +
-  geom_bar() + ylim(0,3500) + labs(x = "Age", title = "Fish Measured Age 0-3")
-ggplot(data = Fish2, aes(x = Length)) + 
-  geom_histogram(binwidth = 5) + labs(title = "Captured Fish Measured Length")
-ggplot(data = Fish2, aes(x = Weight)) +
-  geom_histogram(binwidth = 2) + ylim(0,50) + labs(title = "Captured Fish Measured Weight")
+h1 <- ggplot(Fish2, aes(x = AgeP)) +
+  geom_bar(fill = "cornflowerblue") + ylim(0,3500) + labs(x = "Probable Age", title = "Fish Measured Age 0-3")
+h2 <- ggplot(data = Fish2, aes(x = Length)) + 
+  geom_histogram(binwidth = 2, fill = "cornflowerblue") + labs(title = "Captured Fish Measured Length", x = "Length in mm")
+h3 <- ggplot(data = Fish2, aes(x = Weight)) +
+  geom_histogram(binwidth = 2, fill = "cornflowerblue") + ylim(0,50) + labs(title = "Captured Fish Measured Weight", x = "Weight in grams")
+ggarrange(h1, h2, h3)
 ```
 
 #### Part 3b)
@@ -53,7 +54,14 @@ ggplot(data = Fish2, aes(x = Weight)) +
 ggplot(Fish2, 
        aes(x = Length, 
            y = Weight)) +
-  geom_point() + labs(title = "Fish Measured Weight by Measured Length")
+   geom_point(color="cornflowerblue", 
+             size = 2, 
+             alpha=.8) + 
+  scale_x_continuous(breaks = seq(50, 225, 25),
+                     limits=c(50,250)) +
+  scale_y_continuous(breaks = seq(0, 100, 10),
+                     limits=c(0,100)) + 
+  labs(title = "Fish Measured Weight by Measured Length", x = "Length in mm", y = "Weight in grams")
 ```
 
 ### Problem 4:  Regression of Weight on Length
