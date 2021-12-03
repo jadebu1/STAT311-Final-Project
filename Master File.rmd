@@ -18,13 +18,13 @@ library(car)
 ### Problem 1: Read in and Prepare Data
 ```{r PR}
 Fish <- read.csv("fish.csv")
-glimpse(Fish)
 Fish$Site <- factor(Fish$Site)
 Fish$AgeP<- factor(Fish$AgeP)
 count(Fish)
 Fish2 <- Fish[which(Fish$YrCaught==Fish$YrTagged),]
 count(Fish2)
-
+sum(is.na(Fish$YrTagged))
+colSums(is.na(Fish))
 ```
 
 
