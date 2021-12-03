@@ -12,7 +12,8 @@ library(openintro)
 
 ### Problem 1: Read in and Prepare Data
 ```{r PR}
-read.csv("fish.csv")
+Fish <- read.csv("fish.csv")
+glimpse(Fish)
 
 ```
 
