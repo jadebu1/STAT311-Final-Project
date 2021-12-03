@@ -8,6 +8,11 @@ output: openintro::lab_report
 ```{r load-packages, message=FALSE}
 library(tidyverse)
 library(openintro)
+library(rmarkdown)
+library(BSDA)
+library(infer)
+library (ggpubr)
+library(car)
 ```
 
 ### Problem 1: Read in and Prepare Data
