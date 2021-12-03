@@ -78,7 +78,7 @@ ggplot(Fish2,
    geom_point(color="cornflowerblue", 
              size = 2, 
              alpha=.8) + 
-  labs(title = "Fish Measured Weight on Measured Length", x = "Natural Log Length in mm", y = "Natural Log Weight in grams")
+  labs(title = "Fish Measured Weight on Measured Length", x = "Natural Log of Length in mm", y = "Natural Log of Weight in grams")
 ```
 
 #### Part 4b)
@@ -89,7 +89,7 @@ ggplot(Fish2,
    geom_point(color="cornflowerblue", 
              size = 2, 
              alpha=.8) + 
-  labs(title = "Fish Measured Weight on Measured Length", x = "Natural Log Length in mm", y = "Natural Log Weight in grams") +
+  labs(title = "Fish Measured Weight on Measured Length", x = "Natural Log of Length in mm", y = "Natural Log of Weight in grams") +
   geom_smooth(method = "lm", color = "black")
 ```
 
