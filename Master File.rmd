@@ -14,7 +14,9 @@ library(openintro)
 ```{r PR}
 Fish <- read.csv("fish.csv")
 glimpse(Fish)
-
+Fish$Site <- factor(Fish$Site)
+Fish$AgeP<- factor(Fish$AgeP)
+count(Fish)
 
 
 ```
