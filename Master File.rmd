@@ -12,9 +12,10 @@ library(openintro)
 
 ### Problem 1: Read in and Prepare Data
 ```{r PR}
-FISH <- read.csv("fish.csv")
-glimpse(FISH)
-mean(length)
+Fish <- read.csv("fish.csv")
+glimpse(Fish)
+
+
 
 ```
 
