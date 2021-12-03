@@ -40,11 +40,21 @@ Fish2 %>%
 ```{r Univariate EDA}
 #graph for Age, Weight and Length each
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
-  geom_bar(fill = "cornflowerblue") + ylim(0,3500) + labs(x = "Probable Age", title = "Fish Measured Age 0-3")
-h2 <- ggplot(data = Fish2, aes(x = length)) + 
-  geom_histogram(binwidth = 2, fill = "cornflowerblue") + labs(title = "Captured Fish Measured Length", x = "Length in mm")
-h3 <- ggplot(data = Fish2, aes(x = weight)) +
-  geom_histogram(binwidth = 2, fill = "cornflowerblue") + ylim(0,50) + labs(title = "Captured Fish Measured Weight", x = "Weight in grams")
+  geom_bar(fill = "cornflowerblue") + 
+  ylim(0,3500) + 
+  labs(x = "Probable Age", 
+       title = "Fish Measured Age 0-3") #right skewed unimodal
+h2 <- ggplot(data = Fish2, aes(x = Length)) + 
+  geom_histogram(binwidth = 2, 
+                 fill = "cornflowerblue") + 
+  labs(title = "Captured Fish Measured Length", 
+       x = "Length in mm") #right skewed bimodal
+h3 <- ggplot(data = Fish2, aes(x = Weight)) +
+  geom_histogram(binwidth = 2, 
+                 fill = "cornflowerblue") + 
+  ylim(0,50) + 
+  labs(title = "Captured Fish Measured Weight", 
+       x = "Weight in grams") #right skewed bimodal
 ggarrange(h1, h2, h3)
 summary(Fish2$Weight)
 summary(Fish2$Length)
@@ -65,7 +75,9 @@ ggplot(Fish2,
                      limits=c(50,210)) +
   scale_y_continuous(breaks = seq(0, 100, 10),
                      limits=c(0,100)) + 
-  labs(title = "Fish Measured Weight on Measured Length", x = "Length in mm", y = "Weight in grams")
+  labs(title = "Fish Measured Weight on Measured Length", 
+       x = "Length in mm", 
+       y = "Weight in grams")
 summary(Fish2$Length, Fish2$Weight)
 ```
 
@@ -78,7 +90,9 @@ ggplot(Fish2,
    geom_point(color="cornflowerblue", 
              size = 2, 
              alpha=.8) + 
-  labs(title = "Fish Measured Weight on Measured Length", x = "Natural Log of Length in mm", y = "Natural Log of Weight in grams")
+  labs(title = "Fish Measured Weight on Measured Length", 
+       x = "Natural Log of Length in mm", 
+       y = "Natural Log of Weight in grams")
 ```
 
 #### Part 4b)
@@ -89,7 +103,9 @@ ggplot(Fish2,
    geom_point(color="cornflowerblue", 
              size = 2, 
              alpha=.8) + 
-  labs(title = "Fish Measured Weight on Measured Length", x = "Natural Log of Length in mm", y = "Natural Log of Weight in grams") +
+  labs(title = "Fish Measured Weight on Measured Length", 
+       x = "Natural Log of Length in mm", 
+       y = "Natural Log of Weight in grams") +
   geom_smooth(method = "lm", color = "black")
 ```
 
