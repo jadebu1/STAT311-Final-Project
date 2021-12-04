@@ -95,6 +95,8 @@ ggplot(Fish2,
        y = "Natural Log of Weight in grams")
 ```
 
+### The relationship of the natural log of fish measured weight in grams to the natural log of the measured fish length in millimeters shows positive correlation and is relatively linear. There is a minimal presence of outliers, but the strength of the possitive association between the natural log of fish length in millimeters to the natural log of fish weight in grams suggests that, on average, when fish length (in millimeters) increases, fish weight (in grams) also increases.
+
 #### Part 4b)
 ```{r Reg W on L}
 ggplot(Fish2, 
@@ -107,7 +109,24 @@ ggplot(Fish2,
        x = "Natural Log of Length in mm", 
        y = "Natural Log of Weight in grams") +
   geom_smooth(method = "lm", color = "black")
+
+lm1.out <-
+lm(log(Fish2$Length) * log(Fish2$Weight) ~ Fish2$Length* Fish2$Weight)
+summary(lm1.out)
+plotlog(Fish2$Length) * log(Fish2$Weight) 
+xlab="Natural Log of Length in mm"
+ylab= "Natural Log of Weight in grams"
+abline(lm1.out, lty=2, lwd=2, col="blue")
+points(mean(log(Fish2$Length) * log(Fish2$Weight)),
+mean(log(Fish2$Length) * log(Fish2$Weight)),
+pch=19, col="black") 
+
+lm1.out <-
+
+summary(lm1.out)
 ```
+### Write out the regression equation and interpret the estimated slope parameter in the context of the problem.
+ y = mx + b
 
 
 #### Part 4c)
