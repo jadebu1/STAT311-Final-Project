@@ -32,7 +32,6 @@ length <- sum(is.na(Fish2$Length)) #filter out missing values for Length should 
 #print table with Fish2, number of missing values for weight, age, length and site -> Omit YrCaught and YrTagged from this table
 Fish2 %>%
   count(count(Fish2), weight, age, site, length)
-
 ```
 
 
@@ -67,7 +66,6 @@ summary(Fish2$AgeP)
 #### Part 3b)
 ```{r Bivariate EDA}
 #graph for relationship between weight and length
-
 s1 <- ggplot(Fish2, aes(x=Length, y=Weight)) +
   geom_point(color="cornflowerblue", 
              size = 1, 
@@ -109,7 +107,6 @@ s3 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
        x = "Natural Log Length in mm", 
        y = "Natural Log Weight in grams")
 s3
-
 lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
   summary(lm1.out)
 ```
