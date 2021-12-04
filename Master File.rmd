@@ -23,15 +23,16 @@ Fish <- read.csv("fish.csv")
 Fish$Site <- factor(Fish$Site)
 Fish$AgeP<- factor(Fish$AgeP)
 count(Fish)
-Fish2 <- Fish[which(Fish$YrCaught==Fish$YrTagged),] #this is our new data set for the rest of the assignment
+Fish2 <- Fish[which(Fish$YrCaught==Fish$YrTagged),]#this is our new data set for the rest of the assignment
 Total <- count(Fish2)
-weight <- sum(is.na(Fish$Weight)) #filter out missing values for Weight
-age <- sum(is.na(Fish$AgeP)) #filter out missing values for Age
-site <- sum(is.na(Fish$Site)) #filter out missing values for Site
-length <- sum(is.na(Fish$Length)) #filter out missing values for Length
+weight <- sum(is.na(Fish2$Weight)) #filter out missing values for Weight
+age <- sum(is.na(Fish2$AgeP)) #filter out missing values for Age should be 0
+site <- sum(is.na(Fish2$Site)) #filter out missing values for Site should be 0
+length <- sum(is.na(Fish2$Length)) #filter out missing values for Length should be 0
 #print table with Fish2, number of missing values for weight, age, length and site -> Omit YrCaught and YrTagged from this table
 Fish2 %>%
   count(count(Fish2), weight, age, site, length)
+
 ```
 
 
