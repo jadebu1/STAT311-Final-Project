@@ -14,6 +14,7 @@ library(infer)
 library (ggpubr)
 library(car)
 library(ggplot2)
+library(broom)
 ```
 
 ### Problem 1: Read in and Prepare Data
@@ -65,57 +66,53 @@ summary(Fish2$AgeP)
 #### Part 3b)
 ```{r Bivariate EDA}
 #graph for relationship between weight and length
-ggplot(Fish2, 
-       aes(x = Length, 
-           y = Weight)) +
-   geom_point(color="cornflowerblue", 
-             size = 2, 
-             alpha=.8) + 
-  scale_x_continuous(breaks = seq(50, 210, 20),
-                     limits=c(50,210)) +
-  scale_y_continuous(breaks = seq(0, 100, 10),
-                     limits=c(0,100)) + 
+
+s1 <- ggplot(Fish2, aes(x=Length, y=Weight)) +
+  geom_point(color="cornflowerblue", 
+             size = 1, 
+             alpha=.5) +  
+  geom_smooth(method = "lm", se = FALSE) +
   labs(title = "Fish Measured Weight on Measured Length", 
        x = "Length in mm", 
        y = "Weight in grams")
+(cor1 <- cor(Fish2$Length, Fish2$Weight))
+s1
 summary(Fish2$Length, Fish2$Weight)
+
 ```
 
 ### Problem 4:  Regression of Weight on Length
 #### Part 4a)
 ```{r Scatterplot}
-ggplot(Fish2, 
-       aes(x = log(Length), 
-           y = log(Weight))) +
-   geom_point(color="cornflowerblue", 
-             size = 2, 
-             alpha=.8) + 
-  labs(title = "Fish Measured Weight on Measured Length", 
-       x = "Natural Log of Length in mm", 
-       y = "Natural Log of Weight in grams")
+s3 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
+  geom_point(color="cornflowerblue", 
+             size = 1, 
+             alpha=.5) +  
+  geom_smooth(method = "lm", se = FALSE) + 
+  labs(title = "Natural Log Fish Measured Weight on Measured Length", 
+       x = "Natural Log Length in mm", 
+       y = "Natural Log Weight in grams")
+s3
+
 ```
 
 ### The relationship of the natural log of fish measured weight in grams to the natural log of the measured fish length in millimeters shows positive correlation and is relatively linear. There is a minimal presence of outliers, but the strength of the possitive association between the natural log of fish length in millimeters to the natural log of fish weight in grams suggests that, on average, when fish length (in millimeters) increases, fish weight (in grams) also increases.
 
 #### Part 4b)
 ```{r Reg W on L}
-ggplot(Fish2, 
-       aes(x = log(Weight), 
-           y = log(Length))) +
-   geom_point(color="cornflowerblue", 
-             size = 2, 
-             alpha=.8) + 
-  labs(title = "Fish Measured Weight on Measured Length", 
-       x = "Natural Log of Weight in grams", 
-       y = "Natural Log of Length in mm") +
-  geom_smooth(method = "lm", color = "black")
+s4 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
+  geom_point(color="cornflowerblue", 
+             size = 1, 
+             alpha=.5) +  
+  geom_smooth(method = "lm", se = FALSE, color="black") + 
+  labs(title = "Natural Log Fish Measured Weight on Measured Length", 
+       x = "Natural Log Length in mm", 
+       y = "Natural Log Weight in grams")
+s4
 
-
-lm.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
-  summary(lm.out)
+lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
+  summary(lm1.out)
   
-lmtest <- lm(Weight ~ Length, data = Fish2)
-lmtest
 
 ```
 
