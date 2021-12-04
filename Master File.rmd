@@ -100,38 +100,50 @@ ggplot(Fish2,
 #### Part 4b)
 ```{r Reg W on L}
 ggplot(Fish2, 
-       aes(x = log(Length), 
-           y = log(Weight))) +
+       aes(x = log(Weight), 
+           y = log(Length))) +
    geom_point(color="cornflowerblue", 
              size = 2, 
              alpha=.8) + 
   labs(title = "Fish Measured Weight on Measured Length", 
-       x = "Natural Log of Length in mm", 
-       y = "Natural Log of Weight in grams") +
+       x = "Natural Log of Weight in grams", 
+       y = "Natural Log of Length in mm") +
   geom_smooth(method = "lm", color = "black")
 
+
+lm.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
+  summary(lm.out)
+  
+lmtest <- lm(Weight ~ Length, data = Fish2)
+lmtest
+
+```
+
+#### 
 lm1.out <-
-lm(log(Fish2$Length) * log(Fish2$Weight) ~ Fish2$Length* Fish2$Weight)
+lm(log(Fish2$Length)$log(Fish2$Weight) ~ Length$Weight)
 summary(lm1.out)
-plotlog(Fish2$Length) * log(Fish2$Weight) 
+plotlog(Fish2$Length)log(Fish2$Weight) 
 xlab="Natural Log of Length in mm"
 ylab= "Natural Log of Weight in grams"
 abline(lm1.out, lty=2, lwd=2, col="blue")
-points(mean(log(Fish2$Length) * log(Fish2$Weight)),
-mean(log(Fish2$Length) * log(Fish2$Weight)),
+points(mean(log(Fish2$Length)$log(Fish2$Weight)),
+mean(log(Fish24Length)$log(Fish2$Weight)),
 pch=19, col="black") 
 
 lm1.out <-
 
 summary(lm1.out)
-```
+
 ### Write out the regression equation and interpret the estimated slope parameter in the context of the problem.
  y = mx + b
 
 
 #### Part 4c)
 ```{r Reg Diagnostics}
-
+par(mfrow = c(2, 2))
+plot(lmtest)
+plot(lmtest, 1)
 ```
 
 
