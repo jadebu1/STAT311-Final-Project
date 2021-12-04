@@ -84,15 +84,14 @@ summary(Fish2$Length, Fish2$Weight)
 ### Problem 4:  Regression of Weight on Length
 #### Part 4a)
 ```{r Scatterplot}
-s3 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
+s2 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
-  geom_smooth(method = "lm", se = FALSE) + 
   labs(title = "Natural Log Fish Measured Weight on Measured Length", 
        x = "Natural Log Length in mm", 
        y = "Natural Log Weight in grams")
-s3
+s2
 
 ```
 
@@ -100,7 +99,7 @@ s3
 
 #### Part 4b)
 ```{r Reg W on L}
-s4 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
+s3 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
@@ -108,15 +107,21 @@ s4 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
   labs(title = "Natural Log Fish Measured Weight on Measured Length", 
        x = "Natural Log Length in mm", 
        y = "Natural Log Weight in grams")
-s4
+s3
 
 lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
   summary(lm1.out)
-  
-
 ```
+#### Write out the regression equation and interpret the estimated slope parameter in the context of the problem.
+ y = mx + b
+### regression equation
+intercept = -11.35
+slope = 2.98
 
-#### 
+y = 2.98x - 11.35
+
+#### Sonia's Regression code
+
 lm1.out <-
 lm(log(Fish2$Length)$log(Fish2$Weight) ~ Length$Weight)
 summary(lm1.out)
@@ -132,15 +137,16 @@ lm1.out <-
 
 summary(lm1.out)
 
-### Write out the regression equation and interpret the estimated slope parameter in the context of the problem.
- y = mx + b
-
-
 #### Part 4c)
 ```{r Reg Diagnostics}
-par(mfrow = c(2, 2))
-plot(lmtest)
-plot(lmtest, 1)
+# Linearity of the data
+plot(lm1.out, 1)
+# Normality of residuals
+plot(lm1.out, 2)
+#Cook's distance
+plot(lm1.out, 4)
+# High leverage points
+plot(lm1.out, 5)
 ```
 
 
