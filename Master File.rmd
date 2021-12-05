@@ -166,14 +166,34 @@ plot(lm1.out, 5)
 ### Problem 5:  Fish Length and Site
 #### Part 5a)
 ```{r FL by Site}
+# boxplots of fish length by site
 
+b1 <- ggplot(Fish2, aes(x = Site, y = Length)) + 
+  geom_boxplot() + xlab("Site Location") +
+  ylab("Fish Fork Length (mm)")
 ```
 
 #### Part 5b)
 ```{r Inference for Length}
+# two subsets, one for Site 1 data and other for Site 3 data
+
+site1 <- Fish2 %>%
+  filter(Site == "Site 1")
+
+site3 <- Fish2 %>%
+  filter(Site == "Site 3")
+
+# reporting 95% confidence interval for difference in mean lengths b/w upstream
+# and downstream sites
+
+t.test(site1$Length, site3$Length, conf.level = 0.95)$conf.int
+```
+### We are 95% confident that the mean difference in fish length between the upstream and downstream sites falls between about 2.6 and 6.6.
+
+#### Part 5c)
+```{r Testing Claim w/ Signif. Level}
 
 ```
-
 
 ### Problem 6: Probable Age Class 2 by Site
 #### Part 6a)
