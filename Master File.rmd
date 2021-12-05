@@ -137,14 +137,15 @@ summary(lm1.out)
 
 #### Part 4c)
 ```{r Reg Diagnostics}
-# Linearity of the data
-h4 <- plot(lm1.out, 1)
-# Normality of residuals
-h5 <- plot(lm1.out, 2)
-#Cook's distance
-h6 <- plot(lm1.out, 4)
-# High leverage points
-h7 <- plot(lm1.out, 5)
+### daignostics, need to enter in correct data frames still, copied from lesson 8 html
+par(mfrow=c(2,2))
+plot(BGSall$WT2, BGSall$HT2, xlab="Age 2 Weight (kg)", pch=19,
+     ylab="Age 2 Height (cm)", cex.lab=1.25, cex.axis=1.25)
+abline(lm.out, col="blue", lwd=2)
+plot(BGSall$WT2, residuals(lm.out), xlab="Age 2 Weight (kg)", pch=19,
+     ylab="Residuals", cex.lab=1.25, cex.axis=1.25)
+abline(h=0,col="blue")
+hist(residuals(lm.out), xlab="Residuals", main="")
 
 ```
 
