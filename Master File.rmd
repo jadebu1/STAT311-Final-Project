@@ -138,13 +138,14 @@ summary(lm1.out)
 #### Part 4c)
 ```{r Reg Diagnostics}
 # Linearity of the data
-plot(lm1.out, 1)
+h4 <- plot(lm1.out, 1)
 # Normality of residuals
-plot(lm1.out, 2)
+h5 <- plot(lm1.out, 2)
 #Cook's distance
-plot(lm1.out, 4)
+h6 <- plot(lm1.out, 4)
 # High leverage points
-plot(lm1.out, 5)
+h7 <- plot(lm1.out, 5)
+
 ```
 
 
