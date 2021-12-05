@@ -170,6 +170,7 @@ h7 <- plot(lm1.out, 5)
 b1 <- ggplot(Fish2, aes(x = Site, y = Length)) + 
   geom_boxplot() + xlab("Site Location") +
   ylab("Fish Fork Length (mm)")
+b1
 ```
 
 #### Part 5b)
