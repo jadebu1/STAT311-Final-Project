@@ -23,7 +23,7 @@ Fish <- read.csv("fish.csv")
 Fish$Site <- factor(Fish$Site)
 Fish$AgeP<- factor(Fish$AgeP)
 count(Fish)
-Fish2 <- Fish[which(Fish$YrCaught==Fish$YrTagged),] #this is our new data set for the rest of the assignment
+Fish2 <- filter(Fish, is.na(YrTagged) | YrCaught == YrTagged) #this is our new data set for the rest of the assignment
 Total <- count(Fish2)
 weight <- sum(is.na(Fish2$Weight)) #filter out missing values for Weight
 age <- sum(is.na(Fish2$AgeP)) #filter out missing values for Age should be 0
@@ -32,6 +32,8 @@ length <- sum(is.na(Fish2$Length)) #filter out missing values for Length should 
 #print table with Fish2, number of missing values for weight, age, length and site -> Omit YrCaught and YrTagged from this table
 Fish2 %>%
   count(count(Fish2), weight, age, site, length)
+Fish2
+
 ```
 
 
@@ -42,7 +44,7 @@ Fish2 %>%
 #graph for Age, Weight and Length each
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
   geom_bar(fill = "cornflowerblue") + 
-  ylim(0,3500) + 
+  ylim(0,750) + 
   labs(x = "Probable Age", 
        title = "Fish Measured Age 0-3") #right skewed unimodal
 h2 <- ggplot(data = Fish2, aes(x = Length)) + 
@@ -66,15 +68,13 @@ summary(Fish2$AgeP)
 #### Part 3b)
 ```{r Bivariate EDA}
 #graph for relationship between weight and length
-s1 <- ggplot(Fish2, aes(x=Length, y=Weight)) +
-  geom_point(color="cornflowerblue", 
-             size = 1, 
-             alpha=.5) +  
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(title = "Fish Measured Weight on Measured Length", 
-       x = "Length in mm", 
-       y = "Weight in grams")
-(cor1 <- cor(Fish2$Length, Fish2$Weight))
+s1 <- scatterplot(Fish2$Length, Fish2$Weight, 
+            pch = 19,                  
+            col = "cornflowerblue",                    
+            smooth = FALSE,             
+            regLine = FALSE,
+            xlab = "Length in mm", ylab = "Weight in grams",
+            cex.axis = 1.2, cex.lab = 1.2, cex = 1.2)
 s1
 summary(Fish2$Length, Fish2$Weight)
 
@@ -83,7 +83,7 @@ summary(Fish2$Length, Fish2$Weight)
 ### Problem 4:  Regression of Weight on Length
 #### Part 4a)
 ```{r Scatterplot}
-s2 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
+s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
@@ -121,16 +121,13 @@ y = 2.98x - 11.35
 
 #### Part 4c)
 ```{r Reg Diagnostics}
-### daignostics, need to enter in correct data frames still, copied from lesson 8 html
-par(mfrow=c(2,2))
-plot(BGSall$WT2, BGSall$HT2, xlab="Age 2 Weight (kg)", pch=19,
-     ylab="Age 2 Height (cm)", cex.lab=1.25, cex.axis=1.25)
-abline(lm.out, col="blue", lwd=2)
-plot(BGSall$WT2, residuals(lm.out), xlab="Age 2 Weight (kg)", pch=19,
-     ylab="Residuals", cex.lab=1.25, cex.axis=1.25)
-abline(h=0,col="blue")
-hist(residuals(lm.out), xlab="Residuals", main="")
-
+### diagnostics, need to enter in correct data frames still, copied from lesson 8 html
+plot(fitted(lm1.out), residuals(lm1.out),
+     xlab="Fitted Values", ylab="Residuals")
+abline(h=0)
+hist(residuals(lm1.out), xlab="Residuals", main="")
+qqnorm(residuals(lm1.out))
+qqline(residuals(lm1.out))
 ```
 
 
