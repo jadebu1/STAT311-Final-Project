@@ -25,6 +25,7 @@ Fish$AgeP<- factor(Fish$AgeP)
 count(Fish)
 Fish2 <- filter(Fish, is.na(YrTagged) | YrCaught == YrTagged) #this is our new data set for the rest of the assignment
 Total <- count(Fish2)
+YrTagged <- sum(is.na(Fish2$YrTagged))
 weight <- sum(is.na(Fish2$Weight)) #filter out missing values for Weight
 age <- sum(is.na(Fish2$AgeP)) #filter out missing values for Age should be 0
 site <- sum(is.na(Fish2$Site)) #filter out missing values for Site should be 0
@@ -77,7 +78,6 @@ s1 <- scatterplot(Fish2$Length, Fish2$Weight,
             cex.axis = 1.2, cex.lab = 1.2, cex = 1.2)
 s1
 summary(Fish2$Length, Fish2$Weight)
-
 ```
 
 ### Problem 4:  Regression of Weight on Length
@@ -87,7 +87,7 @@ s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
-  labs(title = "Natural Log Fish Measured Weight on Measured Length", 
+  labs(title = "Natural Log Measured Weight on Measured Length", 
        x = "Natural Log Length in mm", 
        y = "Natural Log Weight in grams")
 s2
@@ -98,12 +98,12 @@ s2
 
 #### Part 4b)
 ```{r Reg W on L}
-s3 <- ggplot(Fish2, aes(x=log(Length), y=Weight)) +
+s3 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
   geom_smooth(method = "lm", se = FALSE, color="black") + 
-  labs(title = "Natural Log Fish Measured Weight on Measured Length", 
+  labs(title = "Natural Log Measured Weight on Measured Length", 
        x = "Natural Log Length in mm", 
        y = "Natural Log Weight in grams")
 s3
@@ -203,18 +203,3 @@ zsum.test(mean.x = 92.58, sigma.x = 28.96313, n.x = 1207, mean.y = 87.97,
 ```
 ### Temporary Note: Writing part of 5c on Google Docs
 
-### Problem 6: Probable Age Class 2 by Site
-#### Part 6a)
-```{r AgeP 2 by Site}
-
-```
-
-#### Part 6b)
-```{r CI P6}
-
-```
-
-#### Part 6c)
-```{r HT P6}
-
-```
