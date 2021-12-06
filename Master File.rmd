@@ -118,22 +118,6 @@ slope = 2.98
 
 y = 2.98x - 11.35
 
-#### Sonia's Regression code
-
-lm1.out <-
-lm(log(Fish2$Length)$log(Fish2$Weight) ~ Length$Weight)
-summary(lm1.out)
-plotlog(Fish2$Length)log(Fish2$Weight) 
-xlab="Natural Log of Length in mm"
-ylab= "Natural Log of Weight in grams"
-abline(lm1.out, lty=2, lwd=2, col="blue")
-points(mean(log(Fish2$Length)$log(Fish2$Weight)),
-mean(log(Fish24Length)$log(Fish2$Weight)),
-pch=19, col="black") 
-
-lm1.out <-
-
-summary(lm1.out)
 
 #### Part 4c)
 ```{r Reg Diagnostics}
@@ -151,8 +135,23 @@ hist(residuals(lm.out), xlab="Residuals", main="")
 
 
 #### Part 4e)
-```{r Beta1 EQ 3}
+```{C.I }
+# Create the right subsets of data, copied from lesson 6, HWK #5a
+C.C <- filter(C.df, Cereal == "Cornflk")
+C.O <- filter(C.df, Cereal == "OatBran")
+t.test(C.O$Cholesterol,C.C$Cholesterol, paired=TRUE, alternative = "less")
 
+## 
+##  Paired t-test
+## 
+## data:  C.O$Cholesterol and C.C$Cholesterol
+## t = -2.6149, df = 11, p-value = 0.01202
+## alternative hypothesis: true difference in means is less than 0
+## 95 percent confidence interval:
+##        -Inf -0.1080601
+## sample estimates:
+## mean of the differences 
+##                  -0.345
 ```
 
 
