@@ -22,19 +22,12 @@ library(broom)
 Fish <- read.csv("fish.csv")
 Fish$Site <- factor(Fish$Site)
 Fish$AgeP<- factor(Fish$AgeP)
-count(Fish)
+Fish$YrCaught <- factor(Fish$YrCaught)
+count(Fish) #5345 total observations
 Fish2 <- filter(Fish, is.na(YrTagged) | YrCaught == YrTagged) #this is our new data set for the rest of the assignment
-Total <- count(Fish2)
-YrTagged <- sum(is.na(Fish2$YrTagged))
-weight <- sum(is.na(Fish2$Weight)) #filter out missing values for Weight
-age <- sum(is.na(Fish2$AgeP)) #filter out missing values for Age should be 0
-site <- sum(is.na(Fish2$Site)) #filter out missing values for Site should be 0
-length <- sum(is.na(Fish2$Length)) #filter out missing values for Length should be 0
-#print table with Fish2, number of missing values for weight, age, length and site -> Omit YrCaught and YrTagged from this table
-Fish2 %>%
-  count(count(Fish2), weight, age, site, length)
-Fish2
-
+count(Fish2) #5306 total observations after filtering out YrCaught > YrTagged
+summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
+Fish2 %>% count(YrCaught, Site, AgeP) #
 ```
 
 
@@ -43,26 +36,26 @@ Fish2
 #### Part 3a)
 ```{r Univariate EDA}
 #graph for Age, Weight and Length each
-h1 <- ggplot(Fish2, aes(x = AgeP)) +
+h1 <- ggplot(data = Fish2, aes(x = AgeP)) +
   geom_bar(fill = "cornflowerblue") + 
   ylim(0,750) + 
   labs(x = "Probable Age", 
        title = "Fish Measured Age 0-3") #right skewed unimodal
+summary(Fish2$AgeP)
 h2 <- ggplot(data = Fish2, aes(x = Length)) + 
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
   labs(title = "Captured Fish Measured Length", 
        x = "Length in mm") #right skewed bimodal
+summary(Fish2$Length)
 h3 <- ggplot(data = Fish2, aes(x = Weight)) +
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
   ylim(0,50) + 
   labs(title = "Captured Fish Measured Weight", 
        x = "Weight in grams") #right skewed bimodal
-ggarrange(h1, h2, h3)
 summary(Fish2$Weight)
-summary(Fish2$Length)
-summary(Fish2$AgeP)
+ggarrange(h1, h2, h3)
 
 ```
 
