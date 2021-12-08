@@ -34,7 +34,7 @@ summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
 
 
 
-### Problem 3:  EDA
+### Problem 3: Exploratory Data Analysis
 #### Part 3a) EDAs of Weight, Age and Length
 ```{r Univariate EDA}
 #graph for Age, Weight and Length each
@@ -72,7 +72,7 @@ summary(Fish2$Length, Fish2$Weight)
 
 ```
 
-### Problem 4:  Regression of Weight on Length
+### Problem 4: Regression of Weight on Length
 #### Part 4a)
 ```{r Scatterplot}
 s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
@@ -103,7 +103,7 @@ lm1.out <- lm(log(Fish2$Length) ~ log(Fish2$Weight))
   summary(lm1.out)
 ```
 
-### regression equation
+### Regression equation
 intercept = -11.412
 slope = 2.99
 
@@ -135,7 +135,7 @@ qt(.975,2533) #2533 df, 95%CI
 ```
 
 
-#### Part 4f Confidence Interval for Weight Given Length
+#### Part 4f) Confidence Interval for Weight Given Length
 ```{r CI and PI} 
 lm2.out <- lm(Weight ~ Length, data=data.frame(Fish2))
 new.Length<- data.frame(Length = 70)
@@ -146,14 +146,12 @@ summary(lm2.out)
 ```
 
 
-### Problem 5:  Fish Length and Site
+### Problem 5: Fish Length and Site
 #### Part 5a) Boxplots of Fish Length by Site
 ```{r FL by Site}
 b1 <- ggplot(Fish2, aes(x = Site, y = Length, fill = Site)) + 
   geom_boxplot() + xlab("Site Location") +
   ylab("Fish Fork Length (mm)") 
- 
- 
 b1
 ```
 
