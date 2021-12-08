@@ -131,7 +131,6 @@ t.test(Fish2$Weight,Fish2$Length, conf.level=0.95)
 ```
 
 
-
 #### Part 4f)
 ```{r CI and PI}
 
@@ -164,8 +163,7 @@ site3 <- Fish2 %>%
 
 t.test(site1$Length, site3$Length, conf.level = 0.95)$conf.int
 ```
-### We are 95% confident that the mean difference in fish length between the 
-### upstream and downstream sites falls between about 2.6 and 6.6.
+### We are 95% confident that the population difference in mean fish length between the upstream and downstream sites falls between about 7.4 and 11mm
 
 #### Part 5c)
 ```{r Testing Claim w/ Signif. Level}
@@ -177,8 +175,5 @@ summary(site3)
 sd(site3$Length)
 nrow(site3)
 
-zsum.test(mean.x = 92.58, sigma.x = 28.96313, n.x = 1207, mean.y = 87.97, 
-          sigma.y = 23.37916, n.y = 1514)
+tsum.test(87.75, 29.37401, 1418, 78.59, 24.01731, 2222)
 ```
-### Temporary Note: Writing part of 5c on Google Docs
-
