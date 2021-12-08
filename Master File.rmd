@@ -35,7 +35,7 @@ summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
 
 
 ### Problem 3:  EDA
-#### Part 3a)
+#### Part 3a) EDAs of Weight, Age and Length
 ```{r Univariate EDA}
 #graph for Age, Weight and Length each
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
@@ -56,12 +56,9 @@ h3 <- ggplot(data = Fish2, aes(x = Weight)) +
        x = "Weight in grams") 
 summary(Fish2$Weight)
 ggarrange(h1, h2, h3)
-
-
-
 ```
 
-#### Part 3b)
+#### Part 3b) Bivariate EDA of Weight and Length
 ```{r Bivariate EDA}
 #graph for relationship between weight and length
 s1 <- scatterplot(Fish2$Length, Fish2$Weight, 
@@ -91,7 +88,7 @@ s2
 
 
 
-#### Part 4b) weight (y) lenght (x)
+#### Part 4b) Include Linear Regression
 ```{r Reg W on L}
 s3 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
@@ -105,8 +102,7 @@ s3
 lm1.out <- lm(log(Fish2$Length) ~ log(Fish2$Weight))
   summary(lm1.out)
 ```
-#### Write out the regression equation and interpret the estimated slope parameter in the context of the problem.
- y = mx + b
+
 ### regression equation
 intercept = -11.412
 slope = 2.99
@@ -114,7 +110,7 @@ slope = 2.99
 y = 2.99x - 11.412
 
 
-#### Part 4c)
+#### Part 4c) Regression Diagnostics
 ```{r Reg Diagnostics}
 par(mfrow = c(2, 2))
 plot(Fish2$Weight, Fish2$Length, xlab="Fish Weight (g)", pch=19,
@@ -130,14 +126,14 @@ mtext("Regression Diagnostics for Natural Log Model", side = 3, line = -1.5, out
 ```
 
 
-#### Part 4e)
+#### Part 4e) Hypothesis Test for the Regression Slope Parameter
 ```{r C.I }
 t.test(Fish2$Weight,Fish2$Length, conf.level=0.95)
 qt(.975,2533) #2533 df, 95%CI
 ```
 
 
-#### Part 4f)
+#### Part 4f Confidence Interval for Weight Given Length
 ```{r CI and PI} 
 lm2.out <- lm(Weight ~ Length, data=data.frame(Fish2))
 new.Length<- data.frame(Length = 70)
@@ -149,9 +145,9 @@ summary(lm2.out)
 
 
 ### Problem 5:  Fish Length and Site
-#### Part 5a)
+#### Part 5a) Boxplots of Fish Length by Site
 ```{r FL by Site}
-# boxplots of fish length by site
+
 
 b1 <- ggplot(Fish2, aes(x = Site, y = Length)) + 
   geom_boxplot() + xlab("Site Location") +
@@ -159,7 +155,7 @@ b1 <- ggplot(Fish2, aes(x = Site, y = Length)) +
 b1
 ```
 
-#### Part 5b)
+#### Part 5b) Inferences for Fish Length
 ```{r Inference for Length}
 # two subsets, one for Site 1 data and other for Site 3 data
 
@@ -176,7 +172,7 @@ t.test(site1$Length, site3$Length, conf.level = 0.95)$conf.int
 ```
 
 
-#### Part 5c)
+#### Part 5c) Testing the Claim of Difference in Mean Length
 ```{r Testing Claim w/ Signif. Level}
 summary(site1)
 sd(site1$Length)
