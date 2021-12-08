@@ -140,11 +140,14 @@ qt(.975,2533) #2533 df, 95%CI
 
 #### Part 4f)
 ```{r CI and PI} 
-#paste code for lesson 8, still need to be refined
-lm2.out <- lm(Fish2$Length ~ Fish2$Weight, data=data.frame(Fish2)) # for y given x, x=70
-new.WT <- data.frame(Length = 70)
-(CI.L70 <- predict(lm2.out, newdata = new.WT, interval = "confidence", level = 0.95))
-(PI.L70 <- predict(lm2.out, newdata = new.WT, interval = "prediction", level = 0.95))
+
+
+lm2.out <- lm(Weight ~ Length, data=data.frame(Fish2))
+new.Length<- data.frame(Length = 70)
+(CI.Length70 <- predict(lm2.out, newdata = new.Length, interval = "confidence", level = 0.95))
+(PI.Length70 <- predict(lm2.out, newdata = new.Length, interval = "prediction", level = 0.95))
+
+  summary(lm2.out)
 ```
 
 
