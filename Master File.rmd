@@ -15,6 +15,7 @@ library (ggpubr)
 library(car)
 library(ggplot2)
 library(broom)
+library(flextable)
 ```
 
 ### Problem 1: Read in and Prepare Data
@@ -29,7 +30,7 @@ Fish2 <- filter(Fish, is.na(YrTagged) | YrCaught == YrTagged) #this is our new d
 count(Fish2) #5306 total observations after filtering out YrCaught > YrTagged
 summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
 
-```
+``` 
 
 
 
@@ -40,21 +41,23 @@ summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
   geom_bar(fill = "cornflowerblue") + 
   labs(x = "Probable Age", 
-       title = "Fish Measured Age 0-3") 
+       title = "Fish Measured Age 0-3 Years") 
 summary(Fish2$AgeP)
 h2 <- ggplot(data = Fish2, aes(x = Length)) + 
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
-  labs(title = "Captured Fish Measured Length", 
+  labs(title = "Captured Fish Measured Length in mm", 
        x = "Length in mm") 
 summary(Fish2$Length)
 h3 <- ggplot(data = Fish2, aes(x = Weight)) +
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
-  labs(title = "Captured Fish Measured Weight", 
+  labs(title = "Captured Fish Measured Weight in Grams", 
        x = "Weight in grams") 
 summary(Fish2$Weight)
 ggarrange(h1, h2, h3)
+
+
 
 ```
 
@@ -66,10 +69,10 @@ s1 <- scatterplot(Fish2$Length, Fish2$Weight,
             col = "cornflowerblue",                    
             smooth = FALSE,             
             regLine = FALSE,
-            xlab = "Length in mm", ylab = "Weight in grams",
+            main = "Fish Length on Fish Weight Visualization", xlab = "Length in mm", ylab = "Weight in grams",
             cex.axis = 1.2, cex.lab = 1.2, cex = 1.2)
-s1
 summary(Fish2$Length, Fish2$Weight)
+
 ```
 
 ### Problem 4:  Regression of Weight on Length
