@@ -115,10 +115,12 @@ y = 2.99x - 11.412
 par(mfrow = c(2, 2))
 plot(Fish2$Weight, Fish2$Length, xlab="Fish Weight (g)", pch=19,
      ylab="Fish 2 Length (mm)", cex.lab=1.25, cex.axis=1.25)
-abline(lm.out, col="blue", lwd=2)
+
+
 plot(fitted(lm1.out), residuals(lm1.out),
      xlab="Fitted Values", ylab="Residuals") 
 abline(h=0, col="blue", lwd=2)
+
 hist(residuals(lm1.out), xlab="Residuals", main = "" )
 qqnorm(residuals(lm1.out))
 qqline(residuals(lm1.out))
@@ -147,11 +149,11 @@ summary(lm2.out)
 ### Problem 5:  Fish Length and Site
 #### Part 5a) Boxplots of Fish Length by Site
 ```{r FL by Site}
-
-
-b1 <- ggplot(Fish2, aes(x = Site, y = Length)) + 
+b1 <- ggplot(Fish2, aes(x = Site, y = Length, fill = Site)) + 
   geom_boxplot() + xlab("Site Location") +
-  ylab("Fish Fork Length (mm)")
+  ylab("Fish Fork Length (mm)") 
+ 
+ 
 b1
 ```
 
