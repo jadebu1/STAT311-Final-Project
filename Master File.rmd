@@ -39,36 +39,42 @@ summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
   geom_bar(fill = "cornflowerblue") + 
   labs(x = "Probable Age (yrs)", 
-       title = "Fish Measured Age 0-3 Years") 
+       title = "A: Fish Measured Age 0-3 Years")  +
+  theme_gray(base_size = 9) +
+  theme(plot.title = element_text(size = 10))
 summary(Fish2$AgeP)
 h2 <- ggplot(data = Fish2, aes(x = Length)) + 
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
-  labs(title = "Captured Fish Measured Fork Length (mm)", 
-       x = "Length (mm)") 
+  labs(title = "B: Captured Fish Measured Fork Length (mm)", 
+       x = "Length (mm)") +
+  theme_gray(base_size = 9) +
+  theme(plot.title = element_text(size = 10))
 summary(Fish2$Length)
 h3 <- ggplot(data = Fish2, aes(x = Weight)) +
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
-  labs(title = "Captured Fish Measured Weight (g)", 
-       x = "Weight (g)") 
+  labs(title = "C: Captured Fish Measured Weight (g)", 
+       x = "Weight (g)") +
+  theme_gray(base_size = 9) +
+  theme(plot.title = element_text(size = 10))
 summary(Fish2$Weight)
-ggarrange(h1, h2, h3)
+plot <- ggarrange(h1, h2, h3)
+annotate_figure(plot, bottom = text_grob("Figure 1 - Univariate Exploratory Data Analysis", face = "bold", ))
 ```
 
 #### Part 3b) Bivariate EDA of Weight and Length
 ```{r Bivariate EDA}
-s1 <- scatterplot(Fish2$Length, Fish2$Weight, 
-            pch = 19,                  
-            col = "cornflowerblue",                    
-            smooth = FALSE,             
-            regLine = FALSE,
-            main = "Figure 2 - Fish Fork Length on Fish Weight Visualization", 
-            xlab = "Fork Length (mm)", 
-            ylab = "Weight in (g)",
-            cex.axis = 1.2, 
-            cex.lab = 1.2, 
-            cex = 1.2)
+
+s1 <- ggplot(Fish2, aes(x = Length, y = Weight)) +
+  geom_point(color="cornflowerblue", 
+             size = 1, 
+             alpha=.5) +  
+  labs(title = "Length on Weight Visualization",
+       x = "Weight (g)", 
+       y = "Fork Length (mm)" ) +
+  theme_gray(base_size = 11) 
+annotate_figure(s1, bottom = text_grob("Figure 2 - Bivariate Exploratory Data Analysis", face = "bold", ))
 summary(Fish2$Length, Fish2$Weight)
 
 ```
@@ -80,10 +86,11 @@ s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
-  labs(title = "Figure 3 - Natural Log Measured Weight on Measured Fork Length", 
+  labs(title = "Natural Log Model of Weight on Length",
        x = "Natural Log Length (mm)", 
-       y = "Natural Log Weight (g)")
-s2
+       y = "Natural Log Weight (g)") +
+  theme_gray(base_size = 9) 
+annotate_figure(s2, bottom = text_grob("Figure 3 - Natural Log Measured Weight on Measured Fork Length", face = "bold", ))
 ```
 
 
@@ -95,27 +102,33 @@ s3 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
              size = 1, 
              alpha=.5) +  
   geom_smooth(method = "lm", se = FALSE, color="black") + 
-  labs(title = "Figure 4 - Natural Log Measured Weight on Natural Log Measured Fork Length", 
-       x = "Natural Log Fork Length (mm)", 
-       y = "Natural Log Weight (g)")
-s3
+  labs(x = "Natural Log Fork Length (mm)", 
+       y = "Natural Log Weight (g)",
+       title = "Natural Log Model with Linear Regression") +
+  theme_gray(base_size = 9) 
+annotate_figure(s3, bottom = text_grob("Figure 4 - Natural Log Measured Weight on Natural Log Measured Fork Length", 
+                                       face = "bold"))
 lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
   summary(lm1.out)
 ```
 #### Part 4c) Regression Diagnostics
 ```{r Reg Diagnostics}
 par(mfrow = c(2, 2))
-plot(Fish2$Weight, Fish2$Length, xlab="Weight (g)", pch=19,
-     ylab="Fork Length (mm)", cex.lab=1.25, cex.axis=1.25)
+plot(Fish2$Weight, Fish2$Length, 
+     xlab="Weight (g)", pch=19,
+     ylab="Fork Length (mm)", 
+     cex.lab=1.25, cex.axis=1.25)
 
-plot(fitted(lm1.out), residuals(lm1.out),
-     xlab="Fitted Values", ylab="Residuals") 
+plot(fitted(lm1.out),
+     residuals(lm1.out),
+     xlab="Fitted Values", 
+     ylab="Residuals") 
 abline(h=0, col="blue", lwd=2)
 
 hist(residuals(lm1.out), xlab="Residuals", main = "" )
 qqnorm(residuals(lm1.out))
 qqline(residuals(lm1.out))
-mtext("Figure 5 - Regression Diagnostics for Natural Log Model", side = 3, line = -1.5, outer = TRUE)
+mtext("Figure 5 - Regression Diagnostics for Natural Log Model", side = 3, line = -27, outer = TRUE)
 ```
 
 
@@ -138,14 +151,18 @@ summary(lm2.out)
 ```
 
 
-### Problem 5: Fish Length and Site
-#### Part 5a) Boxplots of Fish Length by Site
+### Problem 5: Fish Fork Length and Site
+
+#### Part 5a) Boxplots of Fish Fork Length by Site
 ```{r FL by Site}
 b1 <- ggplot(Fish2, aes(x = Site, y = Length, fill = Site)) + 
-  geom_boxplot() + labs(title = "Figure 6 - Fish Fork Length (mm) by Site", 
-       x = "Site Location", 
-       y = "Fork Length (mm)")
-b1
+  geom_boxplot() + 
+  labs(x = "Site Location", 
+       y = "Fork Length (mm)",
+       title = "Fish Fork Length by Site") +
+  theme_gray(base_size = 11)
+annotate_figure(b1, bottom = text_grob("Figure 6 - Boxplot of Fish Fork Length by Site", face = "bold"))
+
 ```
 
 #### Part 5b) Inferences for Fish Length
