@@ -70,7 +70,7 @@ summary(Fish2$Length, Fish2$Weight)
 ```
 
 ### Problem 4: Regression of Weight on Length
-#### Part 4a)
+#### Part 4a) Natural Log Measured Weight on Measured Fork Length Model
 ```{r Scatterplot}
 s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
@@ -122,7 +122,7 @@ qt(0.975,2533)
 ```
 
 
-#### Part 4f) Confidence Interval for Weight Given Length
+#### Part 4f) Confidence Interval and Prediction Interval for Weight Given Length
 ```{r CI and PI} 
 lm2.out <- lm(log(Weight) ~ log(Length), data=data.frame(Fish2))
 new.Length <- data.frame(Length = 70)
