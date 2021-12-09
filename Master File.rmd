@@ -128,7 +128,6 @@ plot(Fish2$Weight, Fish2$Length,
      cex.lab=1, 
      cex.axis=1,
      col="cornflowerblue")
-
 plot(fitted(lm1.out),
      residuals(lm1.out),
      xlab="Fitted Values", 
@@ -138,18 +137,14 @@ plot(fitted(lm1.out),
       abline(h=0, 
              col="red", 
              lwd=2)
-
 hist(residuals(lm1.out), 
      xlab="Residuals",
      main = "C - Residuals Histogram", 
      col = "cornflowerblue")
-      
 qqnorm(residuals(lm1.out), 
        main = "D - Normal Q-Q Plot",
        col="cornflowerblue") 
   qqline(residuals(lm1.out))
-
-
 mtext(~ bold("Figure 5 - Regression Diagnostics for Natural Log Model"), side = 3, line = -26, outer = TRUE)
 ```
 
