@@ -11,30 +11,31 @@ library(openintro)
 library(rmarkdown)
 library(BSDA)
 library(infer)
-library (ggpubr)
+library(ggpubr)
 library(car)
 library(ggplot2)
-library(broom)
-library(flextable)
 ```
 
 ### Problem 1: Read in and Prepare Data
+
 ```{r PR}
 Fish <- read.csv("fish.csv")
 Fish$Site <- factor(Fish$Site)
 Fish$AgeP<- factor(Fish$AgeP)
 Fish$YrCaught <- factor(Fish$YrCaught)
 Fish$YrTagged <- factor(Fish$YrTagged)
-count(Fish) #5345 total observations
-Fish2 <- filter(Fish, is.na(YrTagged) | YrCaught == YrTagged) #this is our new data set for the rest of the assignment
-count(Fish2) #5306 total observations after filtering out YrCaught > YrTagged
-summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
+count(Fish) 
+Fish2 <- filter(Fish, is.na(YrTagged) | YrCaught == YrTagged) 
+count(Fish2) 
+summary(Fish2) 
 ``` 
 
 
 
 ### Problem 3: Exploratory Data Analysis
+
 #### Part 3a) EDAs of Weight, Age and Length
+
 ```{r Univariate EDA}
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
   geom_bar(fill = "cornflowerblue") + 
@@ -64,8 +65,8 @@ annotate_figure(plot, bottom = text_grob("Figure 1 - Univariate Exploratory Data
 ```
 
 #### Part 3b) Bivariate EDA of Weight and Length
-```{r Bivariate EDA}
 
+```{r Bivariate EDA}
 s1 <- ggplot(Fish2, aes(x = Length, y = Weight)) +
   geom_point(color="cornflowerblue", 
              size = 1, 
@@ -76,11 +77,12 @@ s1 <- ggplot(Fish2, aes(x = Length, y = Weight)) +
   theme_gray(base_size = 11) 
 annotate_figure(s1, bottom = text_grob("Figure 2 - Bivariate Exploratory Data Analysis", face = "bold", ))
 summary(Fish2$Length, Fish2$Weight)
-
 ```
 
 ### Problem 4: Regression of Weight on Length
+
 #### Part 4a) Natural Log Measured Weight on Measured Fork Length Model
+
 ```{r Scatterplot}
 s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
@@ -96,6 +98,7 @@ annotate_figure(s2, bottom = text_grob("Figure 3 - Natural Log Measured Weight o
 
 
 #### Part 4b) Include Linear Regression
+
 ```{r Reg W on L}
 s3 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
@@ -112,8 +115,11 @@ lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
   summary(lm1.out)
 ```
 #### Part 4c) Regression Diagnostics
+
 ```{r Reg Diagnostics}
 par(mfrow = c(2, 2))
+par(mar = c(2, 2, 1.5, 1.5))
+par(oma = c(2, 2, 2, 2))
 plot(Fish2$Weight, Fish2$Length, 
      xlab="Weight (g)", pch=19,
      ylab="Fork Length (mm)", 
@@ -123,16 +129,20 @@ plot(fitted(lm1.out),
      residuals(lm1.out),
      xlab="Fitted Values", 
      ylab="Residuals") 
-abline(h=0, col="blue", lwd=2)
+      abline(h=0, col="blue", lwd=2)
 
 hist(residuals(lm1.out), xlab="Residuals", main = "" )
-qqnorm(residuals(lm1.out))
-qqline(residuals(lm1.out))
-mtext("Figure 5 - Regression Diagnostics for Natural Log Model", side = 3, line = -27, outer = TRUE)
+      
+qqnorm(residuals(lm1.out)) 
+  qqline(residuals(lm1.out))
+
+
+mtext(~ bold("Figure 5 - Regression Diagnostics for Natural Log Model"), side = 3, line = -28, outer = TRUE)
 ```
 
 
 #### Part 4e) Hypothesis Test for the Regression Slope Parameter
+
 ```{r C.I }
 t.test(log(Fish2$Weight),log(Fish2$Length), conf.level=0.95)
 qt(0.975,2533) 
@@ -140,20 +150,20 @@ qt(0.975,2533)
 
 
 #### Part 4f) Confidence Interval and Prediction Interval for Weight Given Length
+
 ```{r CI and PI} 
 lm2.out <- lm(log(Weight) ~ log(Length), data=data.frame(Fish2))
 new.Length <- data.frame(Length = 70)
 (CI.Length70 <- predict(lm2.out, newdata = new.Length, interval = "confidence", level = 0.95))
 (PI.Length70 <- predict(lm2.out, newdata = new.Length, interval = "prediction", level = 0.95))
-
 summary(lm2.out)
-
 ```
 
 
 ### Problem 5: Fish Fork Length and Site
 
 #### Part 5a) Boxplots of Fish Fork Length by Site
+
 ```{r FL by Site}
 b1 <- ggplot(Fish2, aes(x = Site, y = Length, fill = Site)) + 
   geom_boxplot() + 
@@ -162,17 +172,15 @@ b1 <- ggplot(Fish2, aes(x = Site, y = Length, fill = Site)) +
        title = "Fish Fork Length by Site") +
   theme_gray(base_size = 11)
 annotate_figure(b1, bottom = text_grob("Figure 6 - Boxplot of Fish Fork Length by Site", face = "bold"))
-
 ```
 
 #### Part 5b) Inferences for Fish Length
+
 ```{r Inference for Length}
 site1 <- Fish2 %>%
   filter(Site == "Site 1")
-
 site3 <- Fish2 %>%
   filter(Site == "Site 3")
-
 t.test(site1$Length, site3$Length, conf.level = 0.95)$conf.int
 ```
 
@@ -182,10 +190,8 @@ t.test(site1$Length, site3$Length, conf.level = 0.95)$conf.int
 summary(site1)
 sd(site1$Length)
 nrow(site1)
-
 summary(site3)
 sd(site3$Length)
 nrow(site3)
-
 tsum.test(87.75, 29.37401, 1418, 78.59, 24.01731, 2222)
 ```
