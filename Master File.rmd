@@ -118,26 +118,39 @@ lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
 
 ```{r Reg Diagnostics}
 par(mfrow = c(2, 2))
-par(mar = c(2, 2, 1.5, 1.5))
-par(oma = c(2, 2, 2, 2))
+par(mar = c(4, 4, 3, 3))
+par(oma = c(1.5, 1.5, 1, 1))
 plot(Fish2$Weight, Fish2$Length, 
-     xlab="Weight (g)", pch=19,
+     xlab="Weight (g)", 
+     pch=10,
      ylab="Fork Length (mm)", 
-     cex.lab=1.25, cex.axis=1.25)
+     main = "A - Weight on Length",
+     cex.lab=1, 
+     cex.axis=1,
+     col="cornflowerblue")
 
 plot(fitted(lm1.out),
      residuals(lm1.out),
      xlab="Fitted Values", 
-     ylab="Residuals") 
-      abline(h=0, col="blue", lwd=2)
+     ylab="Residuals",
+     main = "B - Residual Plot",
+     col="cornflowerblue") 
+      abline(h=0, 
+             col="red", 
+             lwd=2)
 
-hist(residuals(lm1.out), xlab="Residuals", main = "" )
+hist(residuals(lm1.out), 
+     xlab="Residuals",
+     main = "C - Residuals Histogram", 
+     col = "cornflowerblue")
       
-qqnorm(residuals(lm1.out)) 
+qqnorm(residuals(lm1.out), 
+       main = "D - Normal Q-Q Plot",
+       col="cornflowerblue") 
   qqline(residuals(lm1.out))
 
 
-mtext(~ bold("Figure 5 - Regression Diagnostics for Natural Log Model"), side = 3, line = -28, outer = TRUE)
+mtext(~ bold("Figure 5 - Regression Diagnostics for Natural Log Model"), side = 3, line = -26, outer = TRUE)
 ```
 
 
