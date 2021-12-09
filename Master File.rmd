@@ -29,7 +29,6 @@ count(Fish) #5345 total observations
 Fish2 <- filter(Fish, is.na(YrTagged) | YrCaught == YrTagged) #this is our new data set for the rest of the assignment
 count(Fish2) #5306 total observations after filtering out YrCaught > YrTagged
 summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
-
 ``` 
 
 
@@ -37,7 +36,6 @@ summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
 ### Problem 3: Exploratory Data Analysis
 #### Part 3a) EDAs of Weight, Age and Length
 ```{r Univariate EDA}
-#graph for Age, Weight and Length each
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
   geom_bar(fill = "cornflowerblue") + 
   labs(x = "Probable Age", 
@@ -46,7 +44,7 @@ summary(Fish2$AgeP)
 h2 <- ggplot(data = Fish2, aes(x = Length)) + 
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
-  labs(title = "Captured Fish Measured Length in mm", 
+  labs(title = "Captured Fish Measured Fork Length in mm", 
        x = "Length in mm") 
 summary(Fish2$Length)
 h3 <- ggplot(data = Fish2, aes(x = Weight)) +
@@ -60,13 +58,12 @@ ggarrange(h1, h2, h3)
 
 #### Part 3b) Bivariate EDA of Weight and Length
 ```{r Bivariate EDA}
-#graph for relationship between weight and length
 s1 <- scatterplot(Fish2$Length, Fish2$Weight, 
             pch = 19,                  
             col = "cornflowerblue",                    
             smooth = FALSE,             
             regLine = FALSE,
-            main = "Fish Length on Fish Weight Visualization", xlab = "Length in mm", ylab = "Weight in grams",
+            main = "Fish Fork Length on Fish Weight Visualization", xlab = "Fork Length in mm", ylab = "Weight in grams",
             cex.axis = 1.2, cex.lab = 1.2, cex = 1.2)
 summary(Fish2$Length, Fish2$Weight)
 
@@ -79,11 +76,10 @@ s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
-  labs(title = "Natural Log Measured Weight on Measured Length", 
+  labs(title = "Natural Log Measured Weight on Measured Fork Length", 
        x = "Natural Log Length in mm", 
        y = "Natural Log Weight in grams")
 s2
-
 ```
 
 
@@ -95,27 +91,18 @@ s3 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
              size = 1, 
              alpha=.5) +  
   geom_smooth(method = "lm", se = FALSE, color="black") + 
-  labs(title = "Natural Log Measured Weight on Measured Length", 
-       x = "Natural Log Length in mm", 
+  labs(title = "Natural Log Measured Weight on Natural Log Measured Fork Length", 
+       x = "Natural Log Fork Length in mm", 
        y = "Natural Log Weight in grams")
 s3
-lm1.out <- lm(log(Fish2$Length) ~ log(Fish2$Weight))
+lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
   summary(lm1.out)
 ```
-
-### Regression equation
-intercept = -11.412
-slope = 2.99
-
-y = 2.99x - 11.412
-
-
 #### Part 4c) Regression Diagnostics
 ```{r Reg Diagnostics}
 par(mfrow = c(2, 2))
 plot(Fish2$Weight, Fish2$Length, xlab="Fish Weight (g)", pch=19,
-     ylab="Fish 2 Length (mm)", cex.lab=1.25, cex.axis=1.25)
-
+     ylab="Fish 2 Fork Length (mm)", cex.lab=1.25, cex.axis=1.25)
 
 plot(fitted(lm1.out), residuals(lm1.out),
      xlab="Fitted Values", ylab="Residuals") 
@@ -130,19 +117,20 @@ mtext("Regression Diagnostics for Natural Log Model", side = 3, line = -1.5, out
 
 #### Part 4e) Hypothesis Test for the Regression Slope Parameter
 ```{r C.I }
-t.test(Fish2$Weight,Fish2$Length, conf.level=0.95)
-qt(.975,2533) #2533 df, 95%CI
+t.test(log(Fish2$Weight),log(Fish2$Length), conf.level=0.95)
+qt(0.975,2533) 
 ```
 
 
 #### Part 4f) Confidence Interval for Weight Given Length
 ```{r CI and PI} 
-lm2.out <- lm(Weight ~ Length, data=data.frame(Fish2))
-new.Length<- data.frame(Length = 70)
+lm2.out <- lm(log(Weight) ~ log(Length), data=data.frame(Fish2))
+new.Length <- data.frame(Length = 70)
 (CI.Length70 <- predict(lm2.out, newdata = new.Length, interval = "confidence", level = 0.95))
 (PI.Length70 <- predict(lm2.out, newdata = new.Length, interval = "prediction", level = 0.95))
 
 summary(lm2.out)
+
 ```
 
 
@@ -157,16 +145,11 @@ b1
 
 #### Part 5b) Inferences for Fish Length
 ```{r Inference for Length}
-# two subsets, one for Site 1 data and other for Site 3 data
-
 site1 <- Fish2 %>%
   filter(Site == "Site 1")
 
 site3 <- Fish2 %>%
   filter(Site == "Site 3")
-
-# reporting 95% confidence interval for difference in mean lengths b/w upstream
-# and downstream sites
 
 t.test(site1$Length, site3$Length, conf.level = 0.95)$conf.int
 ```
