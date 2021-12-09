@@ -38,20 +38,20 @@ summary(Fish2) #1321 NAs in YrTagged and 2771 NAs in Weight
 ```{r Univariate EDA}
 h1 <- ggplot(Fish2, aes(x = AgeP)) +
   geom_bar(fill = "cornflowerblue") + 
-  labs(x = "Probable Age", 
+  labs(x = "Probable Age (yrs)", 
        title = "Fish Measured Age 0-3 Years") 
 summary(Fish2$AgeP)
 h2 <- ggplot(data = Fish2, aes(x = Length)) + 
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
-  labs(title = "Captured Fish Measured Fork Length in mm", 
-       x = "Length in mm") 
+  labs(title = "Captured Fish Measured Fork Length (mm)", 
+       x = "Length (mm)") 
 summary(Fish2$Length)
 h3 <- ggplot(data = Fish2, aes(x = Weight)) +
   geom_histogram(binwidth = 2, 
                  fill = "cornflowerblue") + 
-  labs(title = "Captured Fish Measured Weight in Grams", 
-       x = "Weight in grams") 
+  labs(title = "Captured Fish Measured Weight (g)", 
+       x = "Weight (g)") 
 summary(Fish2$Weight)
 ggarrange(h1, h2, h3)
 ```
@@ -63,8 +63,12 @@ s1 <- scatterplot(Fish2$Length, Fish2$Weight,
             col = "cornflowerblue",                    
             smooth = FALSE,             
             regLine = FALSE,
-            main = "Fish Fork Length on Fish Weight Visualization", xlab = "Fork Length in mm", ylab = "Weight in grams",
-            cex.axis = 1.2, cex.lab = 1.2, cex = 1.2)
+            main = "Figure 2 - Fish Fork Length on Fish Weight Visualization", 
+            xlab = "Fork Length (mm)", 
+            ylab = "Weight in (g)",
+            cex.axis = 1.2, 
+            cex.lab = 1.2, 
+            cex = 1.2)
 summary(Fish2$Length, Fish2$Weight)
 
 ```
@@ -76,9 +80,9 @@ s2 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
   geom_point(color="cornflowerblue", 
              size = 1, 
              alpha=.5) +  
-  labs(title = "Natural Log Measured Weight on Measured Fork Length", 
-       x = "Natural Log Length in mm", 
-       y = "Natural Log Weight in grams")
+  labs(title = "Figure 3 - Natural Log Measured Weight on Measured Fork Length", 
+       x = "Natural Log Length (mm)", 
+       y = "Natural Log Weight (g)")
 s2
 ```
 
@@ -91,9 +95,9 @@ s3 <- ggplot(Fish2, aes(x=log(Length), y=log(Weight))) +
              size = 1, 
              alpha=.5) +  
   geom_smooth(method = "lm", se = FALSE, color="black") + 
-  labs(title = "Natural Log Measured Weight on Natural Log Measured Fork Length", 
-       x = "Natural Log Fork Length in mm", 
-       y = "Natural Log Weight in grams")
+  labs(title = "Figure 4 - Natural Log Measured Weight on Natural Log Measured Fork Length", 
+       x = "Natural Log Fork Length (mm)", 
+       y = "Natural Log Weight (g)")
 s3
 lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
   summary(lm1.out)
@@ -101,8 +105,8 @@ lm1.out <- lm(log(Fish2$Weight) ~ log(Fish2$Length))
 #### Part 4c) Regression Diagnostics
 ```{r Reg Diagnostics}
 par(mfrow = c(2, 2))
-plot(Fish2$Weight, Fish2$Length, xlab="Fish Weight (g)", pch=19,
-     ylab="Fish 2 Fork Length (mm)", cex.lab=1.25, cex.axis=1.25)
+plot(Fish2$Weight, Fish2$Length, xlab="Weight (g)", pch=19,
+     ylab="Fork Length (mm)", cex.lab=1.25, cex.axis=1.25)
 
 plot(fitted(lm1.out), residuals(lm1.out),
      xlab="Fitted Values", ylab="Residuals") 
@@ -111,7 +115,7 @@ abline(h=0, col="blue", lwd=2)
 hist(residuals(lm1.out), xlab="Residuals", main = "" )
 qqnorm(residuals(lm1.out))
 qqline(residuals(lm1.out))
-mtext("Regression Diagnostics for Natural Log Model", side = 3, line = -1.5, outer = TRUE)
+mtext("Figure 5 - Regression Diagnostics for Natural Log Model", side = 3, line = -1.5, outer = TRUE)
 ```
 
 
@@ -138,8 +142,9 @@ summary(lm2.out)
 #### Part 5a) Boxplots of Fish Length by Site
 ```{r FL by Site}
 b1 <- ggplot(Fish2, aes(x = Site, y = Length, fill = Site)) + 
-  geom_boxplot() + xlab("Site Location") +
-  ylab("Fish Fork Length (mm)") 
+  geom_boxplot() + labs(title = "Figure 6 - Fish Fork Length (mm) by Site", 
+       x = "Site Location", 
+       y = "Fork Length (mm)")
 b1
 ```
 
